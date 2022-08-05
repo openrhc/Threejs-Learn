@@ -2,6 +2,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { onMounted, ref } from 'vue'
+import gsap from 'gsap'
 
 const container = ref<HTMLDivElement>()
 
@@ -27,7 +28,7 @@ const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 })
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
 
 // cube.position.setX(1)
-cube.position.set(1, 1, 1)
+// cube.position.set(1, 1, 1)
 
 // 04 将cube添加到场景
 scene.add(cube)
@@ -38,8 +39,10 @@ const renderer = new THREE.WebGLRenderer()
 // 设置渲染器大小
 renderer.setSize(width, height)
 
+const clock = new THREE.Clock()
+
 // 渲染
-render()
+render(0)
 
 onMounted(() => {
   // 添加到网页
@@ -48,12 +51,24 @@ onMounted(() => {
 
 // 轨道控制器
 const controls = new OrbitControls(camera, renderer.domElement)
-
+controls.target = new THREE.Vector3(1, 1, 1)
 // 添加坐标轴辅助器
 const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
 
-function render() {
+// 设置动画
+gsap.to(cube.position, {
+  x: 5,
+  duration: 1,
+  ease: 'power1.inOut',
+  repeat: Infinity,
+  onComplete: () => {
+    console.log('done')
+  },
+})
+gsap.to(cube.rotation, { x: 2 * Math.PI, duration: 5, repeat: 2 })
+
+function render(time: number) {
   // 通过相机渲染场景
   renderer.render(scene, camera)
   requestAnimationFrame(render)

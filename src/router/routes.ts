@@ -12,9 +12,9 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/components/01-Scene.vue'),
   },
   {
-    name: '物体移动',
-    path: '/move',
-    component: () => import('@/components/01-Move.vue'),
+    name: 'Gsap',
+    path: '/gsap',
+    component: () => import('@/components/02-Gsap.vue'),
   },
 ]
 
