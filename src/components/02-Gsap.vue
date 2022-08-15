@@ -47,6 +47,23 @@ render(0)
 onMounted(() => {
   // 添加到网页
   container.value!.appendChild(renderer.domElement)
+  window.addEventListener('resize', () => {
+    // camera
+    const width = window.innerWidth
+    const height = window.innerHeight
+    camera.aspect = width / height
+    camera.updateProjectionMatrix()
+    // renderer
+    renderer.setSize(width, height)
+    renderer.setPixelRatio(window.devicePixelRatio)
+  })
+  window.addEventListener('dblclick', () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen()
+    } else {
+      renderer.domElement.requestFullscreen()
+    }
+  })
 })
 
 // 轨道控制器

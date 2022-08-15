@@ -7,6 +7,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/components/HelloWorld.vue'),
   },
   {
+    name: '练习',
+    path: '/practice',
+    component: () => import('@/components/Practice.vue'),
+  },
+  {
     name: '场景',
     path: '/scene',
     component: () => import('@/components/01-Scene.vue'),
