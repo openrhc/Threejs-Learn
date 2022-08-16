@@ -21,6 +21,11 @@ const routes: RouteRecordRaw[] = [
     path: '/gsap',
     component: () => import('@/components/02-Gsap.vue'),
   },
+  {
+    name: '3DTiles',
+    path: '/3dtiles',
+    component: () => import('@/components/3DTiles.vue'),
+  },
 ]
 
 export default routes
