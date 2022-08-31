@@ -26,6 +26,11 @@ const routes: RouteRecordRaw[] = [
     path: '/3dtiles',
     component: () => import('@/components/3DTiles.vue'),
   },
+  {
+    name: '地球',
+    path: '/earth',
+    component: () => import('@/components/Earth.vue'),
+  },
 ]
 
 export default routes

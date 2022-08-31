@@ -1,32 +1,28 @@
 import { onMounted, onUnmounted, Ref } from 'vue'
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
+/**
+ * 创建threejs实例
+ * @param container 实例容器
+ * @param width 容器宽度
+ * @param height 容器高度
+ * @param animation 实例动画函数
+ * @returns
+ */
 export function createThreejsInstance(
   container: Ref<HTMLDivElement | undefined>,
   width: number,
-  height: number
+  height: number,
+  animation: (time: number) => void
 ) {
-  if (!container) {
-    throw new Error('未获取到continer,错误')
-  }
   const scene = new THREE.Scene()
-  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 2000)
+  const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 20000)
+
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
-    alpha: true,
   })
-  const controls = new OrbitControls(camera, renderer.domElement)
-  const axesHelper = new THREE.AxesHelper(6671393)
-
   renderer.setSize(width, height)
-  controls.enableDamping = true
-  controls.mouseButtons = {
-    LEFT: THREE.MOUSE.PAN, //左键平移
-    MIDDLE: THREE.MOUSE.DOLLY, //滚轮滑动
-    RIGHT: THREE.MOUSE.ROTATE, //右键旋转
-  }
-  // scene.add(axesHelper)
+  renderer.setAnimationLoop(animation)
 
   function onResize() {
     const width = window.innerWidth
@@ -59,5 +55,5 @@ export function createThreejsInstance(
       window.removeEventListener('dblclick', onDblClick)
     }
   })
-  return { scene, camera, renderer, controls, axesHelper }
+  return { scene, camera, renderer }
 }
